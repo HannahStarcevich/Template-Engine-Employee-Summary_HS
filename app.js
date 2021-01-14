@@ -50,7 +50,7 @@ selectRole()
 
 // prompt to create an manager with name, email and id number info
 function createManager() {
-    inquirer.prompt({
+    inquirer.prompt([{
         type: "input",
         name: "name",
         message: "What is the employee's name?",
@@ -66,8 +66,8 @@ function createManager() {
         type: "input",
         name: "officeNumber",
         message: "What is the manager's office number?"
-    }).then(function (answers) {
-        const manager = new Manager(...answers);
+    }]).then(function (answers) {
+        const manager = new Manager(answers.name, answers.email, answers.id, answers.officeNumber);
         employees.push(manager)
         addEmployee()
     })
@@ -101,7 +101,7 @@ function createEngineer() {
 
 // prompt to create an intern with name, email and id number info
 function createIntern() {
-    inquirer.prompt({
+    inquirer.prompt([{
         type: "input",
         name: "name",
         message: "What is the employee's name?",
@@ -117,8 +117,8 @@ function createIntern() {
         type: "input",
         name: "school",
         message: "What is the intern's school name?"
-    }).then(function (answers) {
-        const intern = new Intern(...answers);
+    }]).then(function (answers) {
+        const intern = new Intern(answers.name, answers.email, answers.id, answers.school);
         employees.push(intern)
         addEmployee()
 
@@ -139,7 +139,7 @@ function addEmployee() {
             selectRole()
         } else {
             render(employees)
-            fs.writeFile("./myteam.html", render(employees), err => {
+            fs.writeFile(outputPath, render(employees), err => {
                 if (err) throw err
                 console.log("the file was written")
             })
